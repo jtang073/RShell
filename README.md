@@ -10,15 +10,15 @@ RShell is a basic command shell in C++ that should prompt and accept input thoug
 ![Diagram](/images/UML.png)
 
 ## Classes
-*Class Group: Shell
-Outputs the initial prompt in which instructions are entered. Accepts the instructions as a string input and parses. Determines what is being processed. Is able to wait indefinitely for input.*
-*Class Group: Logical Operators (Connectors)
-Since the shell is required to accept and number of commands at once, connectors are essential to aggregate said instructions. Strictly includes “;”, “||”, and “&&”. The semicolon operation functions differently from the others as it only compounds executables. The “or” and “and” operations examine their left-hand side and right-hand side in order to return a Boolean.*
-*Class Group: Commands 
+* Class Group: Shell
+Outputs the initial prompt in which instructions are entered. Accepts the instructions as a string input and parses. Determines what is being processed. Is able to wait indefinitely for input.
+* Class Group: Logical Operators (Connectors)
+Since the shell is required to accept and number of commands at once, connectors are essential to aggregate said instructions. Strictly includes “;”, “||”, and “&&”. The semicolon operation functions differently from the others as it only compounds executables. The “or” and “and” operations examine their left-hand side and right-hand side in order to return a Boolean.
+* Class Group: Commands 
 Determines how data will be processed. Accepts the appropriate arguments and flags and will act accordingly. Functions may or may not return a variable type. (the commands might need to be divided up into executable, argument, cmd)
-The exit command is also a part of this class, which will simply terminate processes and end the shell.* 
-*Class Group: Comments
-Different from the rest of the command line, comments are observed when a pound sign (#) is used. Anything after the pound sign is immediately ignored. (this might be checked for in a different class, deeming it unnecessary)*
+The exit command is also a part of this class, which will simply terminate processes and end the shell. 
+* Class Group: Comments
+Different from the rest of the command line, comments are observed when a pound sign (#) is used. Anything after the pound sign is immediately ignored. (this might be checked for in a different class, deeming it unnecessary)
 
 ## Research
 
