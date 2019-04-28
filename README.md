@@ -26,6 +26,10 @@ Different from the rest of the command line, comments are observed when a pound 
 
 (need to actually test fork, execvp, and waitpid on a normal shell)
 
+* **Testing Connectors on a Linux Shell**
+![Picture](/images/code.PNG)
+The linux shell is able to accept any number and combination of commands and connectors. The semicolon (;) operation simply compounds the commands and does not analyze the validity of the commands. The AND (&&) operation analyzes the validity of the left-hand side of the expression and will discontinue executing commands if the left-hand side fails. The OR (||) operation performs the opposite function of AND, continuing the execution of the right-hand side if the left-hand side fails. 
+
 ## Development and Testing Roadmap
 1)	Create and test the base Shell class (should only print out a prompt at this point)
 2)	Create the Instruction class
