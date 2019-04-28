@@ -144,7 +144,7 @@ Output:
 
 These processes must be incorporated in order to effectively perform multiple executables in a single instruction. It is also essential to use waitpid in order to maintain left-to-right execution order when parsing the instruction. 
 
-* **Testing Connectors on a Linux Shell**
+* **Testing Connectors on a Linux Shell**  
 ![Picture](/images/code.PNG)
 The linux shell is able to accept any number and combination of commands and connectors. The semicolon (;) operation simply compounds the commands and does not analyze the validity of the commands. The AND (&&) operation analyzes the validity of the left-hand side of the expression and will discontinue executing commands if the left-hand side fails. The OR (||) operation performs the opposite function of AND, continuing the execution of the right-hand side if the left-hand side fails. 
 
