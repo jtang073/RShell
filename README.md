@@ -25,7 +25,7 @@ Different from the rest of the command line, comments are observed when a pound 
 ## Research
 
 * **Testing fork()**  
-'''c++
+```c++
 #include <stdio.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -47,19 +47,20 @@ int main() {
         forktest();
         return 0;
 }
-'''
+```
 
 Output:  
-'''c++
+```c++
 This is the parent
 This is the child
-'''
+```
 
 Eventhough the fork was successful, the parent process was executed before the child process. This creates zombie processes and eats away memory. 
 
 * **Testing fork() with waitpid and execvp**
-'''c++
-'''
+```c++
+
+```
 
 * **Testing Connectors on a Linux Shell**
 ![Picture](/images/code.PNG)
