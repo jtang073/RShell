@@ -1,10 +1,10 @@
-#include "Instruction.h"
+#include "Instruction.hpp"
 #ifndef __CONNECTOR_H__
 #define __CONNECTOR_H__
 
 using namespace std;
 
-class Connector : public Instruction {
+class Connector: public Instruction {
 	public:
 		Connector(Instruction*, Instruction*);
 		Instruction* rhs;

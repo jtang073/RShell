@@ -7,3 +7,4 @@ bool Or::execute() {
 	}
 	return true;
 }
+
