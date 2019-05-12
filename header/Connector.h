@@ -1,17 +1,15 @@
 #include "Instruction.h"
-#include <vector>
-#include <string>
-#ifndef __COMMAND_H__
-#define __COMMAND_H__
+#ifndef __CONNECTOR_H__
+#define __CONNECTOR_H__
 
 using namespace std;
 
-class Command : public Instruction {
+class Connector : public Instruction {
 	public:
-		Command(string);
-		Instuction* ptr;
-		vector<string> arguments;
+		Connector(Instruction*, Instruction*);
+		Instruction* rhs;
+		Instruction* lhs;
 		bool execute();
 };
 
-#endif //__COMMAND_H__
+#endif //__CONNECTOR_H__

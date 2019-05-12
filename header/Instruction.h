@@ -1,12 +1,12 @@
 #ifndef __INSTRUCTION_H__
-#define __INSTRUCTION_H_
+#define __INSTRUCTION_H__
 
 using namspace std;
 
 class Instruction {
 	public:
 		Instuction() {};
-		Instuction* ptr;
+		//Instuction* ptr;
 		virtual bool execute() = 0;
 };
 
