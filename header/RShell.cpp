@@ -19,7 +19,7 @@ using namespace std;
 void RShell::run() {
 vector<char*> argVector;
 vector<char*> connectorVector;
-vector<Command> commandVector;
+vector<Command*> commandVector;
 string word;
 
 cout << "$ ";
@@ -36,42 +36,58 @@ string connector3 = ";";
 
 while (charptr != NULL) {
 	if(charptr == connector1 || charptr == connector2 || charptr == connector3) {
-		Command command1 = new Command(argVector);
+		Command* command1 = new Command(argVector);
 		commandVector.push_back(command1);
 		connectorVector.push_back(charptr);
+		cout << "Command: ";
+		for(int i = 0; i < argVector.size(); i++) {
+			cout << argVector[i] << " ";
+		}
+		cout << endl;
 		argVector.clear();
 	}
+	else {
 	argVector.push_back(charptr);
-	cout << charptr << endl;
+	}
 	charptr = strtok(NULL, " ");
 }
+cout << "Command: ";
+for(int i = 0; i < argVector.size(); i++) {
+	cout << argVector[i] << " ";
+}
+cout << endl;
+cout << "Connectors: ";
+for(int i = 0; i < connectorVector.size(); i++) {
+	cout << connectorVector[i] << " ";
+}
+cout << endl;
 
 if(!connectorVector.empty()) {
-	vector<Connector> connectorClassVector;
+	vector<Connector*> connectorClassVector;
 	int index = 0;
 	int commandIndex = 2;
 	for(int i = 0; i < connectorVector.size(); i++) {
 		if(i == 0) {
 			if(connectorVector[i] == connector1) {
-				Connector connector =  And(commandVector[0], commandVector[1]);
+				Connector* connector = new And(commandVector[0], commandVector[1]);
 			}
 			else if(connectorVector[i] == connector2) {
-				Connector connector =  Or(commandVector[0], commandVector[1]);
+				Connector* connector = new Or(commandVector[0], commandVector[1]);
 			}
 			else if(connectorVector[i] == connector3) {
-				Connector connector = Semicolon(commandVector[0], commandVector[1]);
+				Connector* connector = new Semicolon(commandVector[0], commandVector[1]);
 			}
 			connectorClassVector.push_back(connector);
 		}
 		else {
 			if(connectorVector[i] == connector1) {
-				Connector connector = And(connectorClassVector[index], commandVector[commandIndex]);
+				Connector* connector = new And(connectorClassVector[index], commandVector[commandIndex]);
 			}
 			else if(connectorVector[i] == connector2) {
-				Connector connector =  Or(connectorClassVector[index], commandVector[commandIndex]);
+				Connector* connector = new Or(connectorClassVector[index], commandVector[commandIndex]);
 			}
 			else if(connectorVector[i] == connector3) {
-				Connector connector =  Semicolon(connectorClassVector[index], commandVector[commandIndex]);
+				Connector* connector = new Semicolon(connectorClassVector[index], commandVector[commandIndex]);
 			}
 			if(i == connectorVector.size() - 1) {
 				connector.execute();

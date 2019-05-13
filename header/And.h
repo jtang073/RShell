@@ -3,10 +3,10 @@
 #include "Connector.h"
 using namespace std;
 
-class And: public Connector{
+class And : public Connector {
 	public:
-	And() {};
-	bool execute();
+		And(Instruction* lhs, Instruction* rhs);
+		bool execute();
 };
 
 #endif

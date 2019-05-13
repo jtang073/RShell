@@ -4,9 +4,9 @@
 
 using namespace std;
 
-class Connector: public Instruction {
+class Connector : public Instruction {
 	public:
-		Connector(Instruction*, Instruction*);
+		Connector(Instruction* lhs, Instruction* rhs);
 		Instruction* rhs;
 		Instruction* lhs;
 		bool execute();
