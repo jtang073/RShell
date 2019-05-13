@@ -51,22 +51,29 @@ while (charptr != NULL) {
 	}
 	charptr = strtok(NULL, " ");
 }
+Command* command1 = new Command(argVector);
+commandVector.push_back(command1);
+connectorVector.push_back(charptr);
+
 cout << "Command: ";
 for(int i = 0; i < argVector.size(); i++) {
 	cout << argVector[i] << " ";
 }
 cout << endl;
 cout << "Connectors: ";
-for(int i = 0; i < connectorVector.size(); i++) {
+for(int i = 0; i < connectorVector.size()-1; i++) {
 	cout << connectorVector[i] << " ";
 }
 cout << endl;
+cout << "Connector: " << connectorVector.size() << endl;
+cout << "Command: " << commandVector.size() << endl;
 
-if(!connectorVector.empty()) {
+if(connectorVector.size() > 1) {
 	vector<Connector*> connectorClassVector;
-	int index = 0;
+	//int index = 0;
 	int commandIndex = 2;
-	for(int i = 0; i < connectorVector.size(); i++) {
+	for(int i = 0; i < connectorVector.size()-1; i++) {
+	int index = i;
 		if(i == 0) {
 			if(connectorVector[i] == connector1) {
 				And* temp = new And(commandVector[0], commandVector[1]);
@@ -120,7 +127,9 @@ if(!connectorVector.empty()) {
 else{
 	commandVector[0]->execute();
 }
-
+commandVector.clear();
+connectorVector.clear();
+argVector.clear();
 cout << "$ ";
 
 }
