@@ -9,14 +9,14 @@
 #include <stdlib.h>
 
 #include "Connector.h"
-//#include "And.h"
-//#include "Or.h"
-//#include "Semicolon.h"
+#include "And.h"
+#include "Or.h"
+#include "Semicolon.h"
 #include "Command.h"
 
 using namespace std;
 
-void RShell::run() {
+int main()  {
 vector<char*> argVector;
 vector<char*> connectorVector;
 vector<Command*> commandVector;
@@ -69,47 +69,64 @@ if(!connectorVector.empty()) {
 	for(int i = 0; i < connectorVector.size(); i++) {
 		if(i == 0) {
 			if(connectorVector[i] == connector1) {
-				Connector* connector = new And(commandVector[0], commandVector[1]);
+				And* temp = new And(commandVector[0], commandVector[1]);
+				connectorClassVector.push_back(temp);
 			}
 			else if(connectorVector[i] == connector2) {
-				Connector* connector = new Or(commandVector[0], commandVector[1]);
+				Or* temp = new Or(commandVector[0], commandVector[1]);
+				connectorClassVector.push_back(temp);
 			}
 			else if(connectorVector[i] == connector3) {
-				Connector* connector = new Semicolon(commandVector[0], commandVector[1]);
+				Semicolon* temp = new Semicolon(commandVector[0], commandVector[1]);
+				connectorClassVector.push_back(temp);
 			}
-			connectorClassVector.push_back(connector);
 		}
 		else {
 			if(connectorVector[i] == connector1) {
-				Connector* connector = new And(connectorClassVector[index], commandVector[commandIndex]);
-			}
+				And* temp = new And(connectorClassVector[index], commandVector[commandIndex]);
+				if(i == connectorVector.size() - 1) {
+                                        temp->execute();
+                                        break;
+                                }
+                                connectorClassVector.push_back(temp);
+                                commandIndex++;
+                                index++;
+                        }
 			else if(connectorVector[i] == connector2) {
-				Connector* connector = new Or(connectorClassVector[index], commandVector[commandIndex]);
-			}
+				Or* temp = new Or(connectorClassVector[index], commandVector[commandIndex]);
+				if(i == connectorVector.size() - 1) {
+                                        temp->execute();
+                                        break;
+                                }
+                                connectorClassVector.push_back(temp);
+                                commandIndex++;
+                                index++;
+                        }
+			
 			else if(connectorVector[i] == connector3) {
-				Connector* connector = new Semicolon(connectorClassVector[index], commandVector[commandIndex]);
+				Semicolon* temp = new Semicolon(connectorClassVector[index], commandVector[commandIndex]);
+				if(i == connectorVector.size() - 1) {
+                                	temp->execute();
+                                	break;
+                       		}
+                        	connectorClassVector.push_back(temp);
+                        	commandIndex++;
+                        	index++;
 			}
-			if(i == connectorVector.size() - 1) {
-				connector.execute();
-				break;
-			}
-			connectorClassVector.push_back(connector);
-			commandIndex++;
-			index++;
 			}
 		}
 	}
-}
+
 else{
-	commandVector[0].execute();
+	commandVector[0]->execute();
 }
 
 cout << "$ ";
 
 }
 
-int main() {
-	RShell test;
-	test.run();
-return 0;
+//int main() {
+//	RShell test;
+//	test.run();
+//return 0;
 }

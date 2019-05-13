@@ -1,11 +1,11 @@
-#ifndef __AND_H__
-#define __AND_H__
+#ifndef AND_H
+#define AND_H
 #include "Connector.h"
 using namespace std;
 
 class And : public Connector {
 	public:
-		And(Instruction* lhs, Instruction* rhs);
+		And(Instruction* lhs, Instruction* rhs) {};
 		bool execute();
 };
 

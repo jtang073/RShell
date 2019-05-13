@@ -10,6 +10,7 @@ class Connector : public Instruction {
 		Instruction* rhs;
 		Instruction* lhs;
 		bool execute();
+		Connector() {};
 };
 
 #endif //__CONNECTOR_H__

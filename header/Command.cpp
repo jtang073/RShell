@@ -1,4 +1,4 @@
-#include "Instrution.hpp"
+#include "Instruction.hpp"
 #include "Command.h"
 #include <vector>
 #include <string.h>
@@ -7,8 +7,8 @@
 
 using namespace std;
 
-Command::Command(vector<char> argu) {
-        vector<char> arguments = argu;
+Command::Command(vector<char*> argu) {
+        vector<char*> arguments = argu;
 }
 
 bool Command::execute() {

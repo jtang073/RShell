@@ -5,7 +5,7 @@ using namespace std;
 
 class Or : public Connector {
 	public:
-	Or(Instruction* left, Instruction* right);
+	Or(Instruction* left, Instruction* right) {};
 	bool execute();
 };
 

@@ -6,5 +6,7 @@ Connector::Connector(Instruction* lhs, Instruction* rhs) {
 	this->lhs = lhs;
 }
 
+//Connector::Connector() {};
+
 bool Connector::execute() {};
 
