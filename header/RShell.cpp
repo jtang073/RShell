@@ -17,6 +17,7 @@
 using namespace std;
 
 int main()  {
+	
 vector<char*> argVector;
 vector<char*> connectorVector;
 vector<Command*> commandVector;
@@ -35,58 +36,27 @@ string connector2 = "||";
 string connector3 = ";";
 
 while (charptr != NULL) {
-	cout << charptr << endl;
 	if(charptr == connector1 || charptr == connector2 || charptr == connector3) {
 		Command* command1 = new Command(argVector);
 		commandVector.push_back(command1);
 		connectorVector.push_back(charptr);
-		/*
-		cout << "Command: ";
-		for(int i = 0; i < argVector.size(); i++) {
-			cout << argVector[i] << " ";
-		}
-		cout << endl;
-		cout << "Command size: " << argVector.size() << endl;
-		*/
 		argVector.clear();
 	}
 	else {
-	//cout << "the pushback on argvector works?" << endl;
 	argVector.push_back(charptr);
-	//cout << "size of args: " << argVector.size() << endl;
 	}
 	charptr = strtok(NULL, " ");
 }
-/*
-for(int i = 0; i < argVector.size(); i++) {
-	cout << "argvector: " << argVector.at(i) << endl;
-}
-*/
-cout << "arg size before creation of command: " << argVector.size() << endl;
+
 Command* command1 = new Command(argVector);
 commandVector.push_back(command1);
-/*
-cout << "Command: ";
-for(int i = 0; i < argVector.size(); i++) {
-	cout << argVector[i] << " ";
-}
-cout << endl;
-cout << "Connectors: ";
-for(int i = 0; i < connectorVector.size(); i++) {
-	cout << connectorVector[i] << " ";
-}
-cout << endl;
-cout << "Connector: " << connectorVector.size() << endl;
-cout << "Command: " << commandVector.size() << endl;
-*/
+
 if(connectorVector.size() > 0) {
 	vector<Connector*> connectorClassVector;
 	int index = 0;
 	int commandIndex = 2;
 	for(int i = 0; i < connectorVector.size(); i++) {
-	//int index = i;
 		if(i == 0) {
-			cout << "pushing the first connector!" << endl;
 			if(connectorVector[i] == connector1) {
 				And* temp = new And(commandVector[0], commandVector[1]);
 				connectorClassVector.push_back(temp);
@@ -96,12 +66,11 @@ if(connectorVector.size() > 0) {
 				connectorClassVector.push_back(temp);
 			}
 			else if(connectorVector[i] == connector3) {
-				Semicolon* temp = new Semicolon(commandVector[0], commandVector[1]);
+				Semicolon* temp = new Semicolon(commandVector.at(0), commandVector.at(1));
 				connectorClassVector.push_back(temp);
-				temp->execute();
 			}
 			if(i == connectorVector.size() - 1) {
-				//connectorClassVector.at(i)->execute();
+				connectorClassVector.at(i)->execute();
 			}
 		}
 		else {
@@ -127,11 +96,8 @@ if(connectorVector.size() > 0) {
                         }
 			
 			else if(connectorVector[i] == connector3) {
-				cout << "The connectorclassvector has size: " << connectorClassVector.size() << endl;
 				Semicolon* temp = new Semicolon(connectorClassVector[index], commandVector[commandIndex]);
-				cout << "does this even do anything" << endl;
 				if(i == connectorVector.size() - 1) {
-					cout << "tryna execute" << endl;
                                 	temp->execute();
                                 	break;
                        		}
@@ -141,10 +107,11 @@ if(connectorVector.size() > 0) {
 			}
 		}
 	}
+	connectorClassVector.clear();
 }
 
 else{
-	commandVector[0]->execute();
+	commandVector.at(0)->execute();
 }
 commandVector.clear();
 connectorVector.clear();

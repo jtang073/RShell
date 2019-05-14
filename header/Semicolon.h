@@ -5,8 +5,8 @@ using namespace std;
 
 class Semicolon : public Connector {
 	public:
-	Semicolon(Instruction* left, Instruction* right) {};
-	bool execute();
+		Semicolon(Instruction*, Instruction*);
+		bool execute();
 };
 
 #endif

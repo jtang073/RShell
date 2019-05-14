@@ -6,11 +6,11 @@ using namespace std;
 
 class Connector : public Instruction {
 	public:
-		Connector(Instruction* lhs, Instruction* rhs);
+		Connector(Instruction*, Instruction*);
 		Instruction* rhs;
 		Instruction* lhs;
 		bool execute();
-		Connector() {};
+		Connector();
 };
 
 #endif //__CONNECTOR_H__

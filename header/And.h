@@ -5,7 +5,7 @@ using namespace std;
 
 class And : public Connector {
 	public:
-		And(Instruction* lhs, Instruction* rhs) {};
+		And(Instruction*, Instruction*);
 		bool execute();
 };
 
