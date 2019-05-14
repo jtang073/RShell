@@ -8,7 +8,7 @@ Or::Or(Instruction* left, Instruction* right) {
 
 bool Or::execute() {
 	if (!lhs->execute()) {
-		return false;
+		return rhs->execute();
 	}
 	return true;
 }

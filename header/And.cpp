@@ -8,8 +8,7 @@ And::And(Instruction* lhs, Instruction* rhs) {
 
 bool And::execute() {
         if (lhs->execute()) {
-                rhs->execute();
-                return true;
+                return rhs->execute();
         }
         return false;
 }

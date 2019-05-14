@@ -36,6 +36,7 @@ string connector2 = "||";
 string connector3 = ";";
 
 while (charptr != NULL) {
+	//if(strcmp(
 	if(charptr == connector1 || charptr == connector2 || charptr == connector3) {
 		Command* command1 = new Command(argVector);
 		commandVector.push_back(command1);
