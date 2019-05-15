@@ -19,8 +19,6 @@ Since the shell is required to accept and number of commands at once, connectors
 * **Class Group: Commands**  
 Determines how data will be processed. Accepts the appropriate arguments and flags and will act accordingly. Functions may or may not return a variable type. (the commands might need to be divided up into executable, argument, cmd)
 The exit command is also a part of this class, which will simply terminate processes and end the shell. 
-* **Class Group: Comments**  
-Different from the rest of the command line, comments are observed when a pound sign (#) is used. Anything after the pound sign is immediately ignored.
 
 # Research
 
@@ -158,6 +156,7 @@ The linux shell is able to accept any number and combination of commands and con
 7)	Create and test the Comment class
 8)	Test all classes together (same as 6 but with comments)
 
-
+# Reflection
+The creation of RShell as more difficult than anticipated. Since we did not want to depend on outside sources for the coding of a shell, some functions were either overcomplicated or oversimplified. The oversimplified functions typically did not work as expected, while the complicated code was difficult to test. Despite attempting to develop using agile principles, it helped little accentuate or coding skill. Therefore, it was our lack of effectiveness in coding which dragged our progress and delayed the final submission of the product. We spent approximately 25 hours on the creation of this assignment. 
 
 
