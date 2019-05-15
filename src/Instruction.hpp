@@ -1,4 +1,4 @@
-fndef __INSTRUCTION_HPP__
+#ifndef __INSTRUCTION_HPP__
 #define __INSTRUCTION_HPP__
 #include "RShell.h"
 using namespace std;
