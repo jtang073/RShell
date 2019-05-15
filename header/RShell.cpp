@@ -16,7 +16,9 @@
 
 using namespace std;
 
-int main()  {
+//int main()  {
+void RShell::run() {
+
 	
 vector<char*> argVector;
 vector<char*> connectorVector;
@@ -41,9 +43,9 @@ for (int k = 0; k < word.length() - 1; ++k) {
         if (word.at(k) == '\"') {
                 word.erase(k, 1);
         }
-	//if (word.at(k) == '#' && word.at(k-1) == ' ') {
-	//	word.erase(k, word.end());
-	//}
+	if (word.at(k) == '#' && word.at(k-1) == ' ') {
+		word.erase(word.begin()+k, word.end()+0);
+	}
 }
 
 
