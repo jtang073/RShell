@@ -10,9 +10,6 @@ Semicolon::Semicolon(Instruction* left, Instruction* right) {
 
 bool Semicolon::execute() {
         lhs->execute();
-        if (rhs->execute()) {
-                return true;
-        }
-        return false;
+        return(rhs->execute());
 }
 
