@@ -7,7 +7,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <stdlib.h>
-
+#include <iterator>
 #include "Connector.h"
 #include "And.h"
 #include "Or.h"
@@ -26,11 +26,34 @@ string word;
 cout << "$ ";
 
 while(getline(cin, word)) {
+
+for (int k = 0; k < word.length() - 1; ++k) {
+	if (word.at(k) == ';' && word.at(k+1) == ' ') {
+		word.insert(k, 1, ' ');
+		++k;
+	}
+	//if (word.at(k) == '\"') {
+	//	word.erase(k, 1);
+	//}
+}
+
+for (int k = 0; k < word.length() - 1; ++k) {
+        if (word.at(k) == '\"') {
+                word.erase(k, 1);
+        }
+	//if (word.at(k) == '#' && word.at(k-1) == ' ') {
+	//	word.erase(k, word.end());
+	//}
+}
+
+
 char myword[word.length() + 1];
 strcpy(myword, word.c_str());
 
 char* charptr;
 charptr = strtok(myword, " ");
+
+
 string connector1 = "&&";
 string connector2 = "||";
 string connector3 = ";";
