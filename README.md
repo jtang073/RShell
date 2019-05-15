@@ -11,14 +11,13 @@ RShell is a basic command shell in C++ that should prompt and accept input thoug
 
 # Classes
 * **Class Group: Shell**  
-Outputs the initial prompt in which instructions are entered. Accepts the instructions as a string input and parses. Determines what is being processed. Is able to wait indefinitely for input.
+Outputs the initial prompt in which instructions are entered. Accepts the instructions as a string input and parses. The parsed string is processed as a vector of character pointers. Is able to wait indefinitely for input.
 * **Class Group: Instruction**  
-The input that is being parsed and what the below classes inherit from. The parser will analyze this class and determine the subclass that the parsed strings belong to (Comment, Connector, or Command).
-* **Class Group: Logical Operators (Connectors)**  
-Since the shell is required to accept and number of commands at once, connectors are essential to aggregate said instructions. Strictly includes “;”, “||”, and “&&”. The semicolon operation functions differently from the others as it only compounds executables. The “or” and “and” operations examine their left-hand side and right-hand side in order to return a Boolean.
-* **Class Group: Commands**  
-Determines how data will be processed. Accepts the appropriate arguments and flags and will act accordingly. Functions may or may not return a variable type. (the commands might need to be divided up into executable, argument, cmd)
-The exit command is also a part of this class, which will simply terminate processes and end the shell. 
+The base class of both Command and Connector. It highlights one pure virtual function that all subclasses inherit: execute(). 
+* **Class Group: Connector**  
+This class accepts two instructions as its parameters. It is only concerned about executing its left-hand side instruction and determining whether it should then execute its right-hand instruction. It returns a boolean based on the results of the left-hand instruction and the right-hand instruction. Subclasses strictly include ";", "&&", and "||".
+* **Class Group: Command**  
+Determines how data will be processed. Accepts a vector of character pointers and converts the vector into a null-terminated array. Then, execvp is executed with the array as the parameter. The exit command is assessed here and a child is forked in order to execute execvp. Returns a boolean based on the success of executing the arguments given. 
 
 # Research
 
