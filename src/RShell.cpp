@@ -142,6 +142,7 @@ else{
 commandVector.clear();
 connectorVector.clear();
 argVector.clear();
+word.clear();
 cout << "$ ";
 
 }
