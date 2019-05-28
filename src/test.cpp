@@ -108,7 +108,7 @@ TEST(ConnectorTest, AndLeftFalse) {
         Command* command2 = new Command(testvec2);
 
         And* connector = new And(command1, command2);
-        EXPECT_EQ(connector->execute(), true);
+        EXPECT_EQ(connector->execute(), false);
 }
 
 TEST(ConnectorTest, AndBothFalse) {
@@ -126,7 +126,7 @@ TEST(ConnectorTest, AndBothFalse) {
         Command* command2 = new Command(testvec2);
 
         And* connector = new And(command1, command2);
-        EXPECT_EQ(connector->execute(), true);
+        EXPECT_EQ(connector->execute(), false);
 }
 
 TEST(ConnectorTest, OrLeftTrue) {
@@ -189,7 +189,7 @@ TEST(ConnectorTest, OrBothFalse) {
         Command* command2 = new Command(testvec2);
 
         Or* connector = new Or(command1, command2);
-        EXPECT_EQ(connector->execute(), true);
+        EXPECT_EQ(connector->execute(), false);
 }
 
 TEST(ConnectorTest, SemicolonLeftTrue) {
@@ -252,9 +252,128 @@ TEST(ConnectorTest, SemicolonBothFalse) {
         Command* command2 = new Command(testvec2);
 
         Semicolon* connector = new Semicolon(command1, command2);
-        EXPECT_EQ(connector->execute(), true);
+        EXPECT_EQ(connector->execute(), false);
 }
 
+TEST(Test_Test, eFlag_SRC_TRUE) {
+        vector<char*> testvec;
+        string arg1 = "test";
+        char* argcstring1 = (char*)(arg1.c_str());
+	testvec.push_back(argcstring1);
+	
+	vector<char*> testve3;
+        string arg3 = "-e";
+        char* argcstring3 = (char*)(arg3.c_str());
+        testvec.push_back(argcstring3);
+
+        vector<char*> testvec2;
+        string arg2 = "src";
+        char* argcstring2 = (char*)(arg2.c_str());
+        testvec.push_back(argcstring2);
+
+        Command* command1 = new Command(testvec);
+        EXPECT_EQ(command1->execute(), true);
+}
+
+TEST(Test_Test, dFlag_SRC_TRUE) {
+        vector<char*> testvec;
+        string arg1 = "test";
+        char* argcstring1 = (char*)(arg1.c_str());
+        testvec.push_back(argcstring1);
+
+        vector<char*> testve3;
+        string arg3 = "-d";
+        char* argcstring3 = (char*)(arg3.c_str());
+        testvec.push_back(argcstring3);
+
+        vector<char*> testvec2;
+        string arg2 = "src";
+        char* argcstring2 = (char*)(arg2.c_str());
+        testvec.push_back(argcstring2);
+
+        Command* command1 = new Command(testvec);
+        EXPECT_EQ(command1->execute(), true);
+}
+
+TEST(Test_Test, fFlag_NAMESTXT_TRUE) {
+        vector<char*> testvec;
+        string arg1 = "test";
+        char* argcstring1 = (char*)(arg1.c_str());
+        testvec.push_back(argcstring1);
+
+        vector<char*> testve3;
+        string arg3 = "-f";
+        char* argcstring3 = (char*)(arg3.c_str());
+        testvec.push_back(argcstring3);
+
+        vector<char*> testvec2;
+        string arg2 = "names.txt";
+        char* argcstring2 = (char*)(arg2.c_str());
+        testvec.push_back(argcstring2);
+
+        Command* command1 = new Command(testvec);
+        EXPECT_EQ(command1->execute(), true);
+}
+
+TEST(Test_Test, eFlag_HaveMercyOnUs_FALSE) {
+        vector<char*> testvec;
+        string arg1 = "test";
+        char* argcstring1 = (char*)(arg1.c_str());
+        testvec.push_back(argcstring1);
+
+        vector<char*> testve3;
+        string arg3 = "-e";
+        char* argcstring3 = (char*)(arg3.c_str());
+        testvec.push_back(argcstring3);
+
+        vector<char*> testvec2;
+        string arg2 = "HaveMercyOnUs";
+        char* argcstring2 = (char*)(arg2.c_str());
+        testvec.push_back(argcstring2);
+
+        Command* command1 = new Command(testvec);
+        EXPECT_EQ(command1->execute(), false);
+}
+
+TEST(Test_Test, dFlag_WeDontKnowWhatWereDoing_FALSE) {
+        vector<char*> testvec;
+        string arg1 = "test";
+        char* argcstring1 = (char*)(arg1.c_str());
+        testvec.push_back(argcstring1);
+
+        vector<char*> testve3;
+        string arg3 = "-d";
+        char* argcstring3 = (char*)(arg3.c_str());
+        testvec.push_back(argcstring3);
+
+        vector<char*> testvec2;
+        string arg2 = "HaveMercyOnUs";
+        char* argcstring2 = (char*)(arg2.c_str());
+        testvec.push_back(argcstring2);
+
+        Command* command1 = new Command(testvec);
+        EXPECT_EQ(command1->execute(), false);
+}
+
+TEST(Test_Test, fFlag_CriesInBinary_FALSE) {
+        vector<char*> testvec;
+        string arg1 = "test";
+        char* argcstring1 = (char*)(arg1.c_str());
+        testvec.push_back(argcstring1);
+
+        vector<char*> testve3;
+        string arg3 = "-f";
+        char* argcstring3 = (char*)(arg3.c_str());
+        testvec.push_back(argcstring3);
+
+        vector<char*> testvec2;
+        string arg2 = "HaveMercyOnUs";
+        char* argcstring2 = (char*)(arg2.c_str());
+        testvec.push_back(argcstring2);
+
+        Command* command1 = new Command(testvec);
+        EXPECT_EQ(command1->execute(), false);
+}
 
 
 int main(int argc, char **argv) {
