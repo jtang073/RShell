@@ -1,6 +1,7 @@
 #include "Instruction.hpp"
 #include <vector>
 #include <string>
+#include "Connector.h"
 #ifndef __COMMAND_H__
 #define __COMMAND_H__
 
@@ -12,6 +13,7 @@ class Command : public Instruction {
 		Instruction* ptr;
 		vector<char*> arguments;
 		bool execute();
+		bool run(vector<Connector*> connectorClassVecto, int inde, int comInde, vector<char*> connectorVecto, vector<Command*> commandVecto);
 };
 
 #endif //__COMMAND_H__

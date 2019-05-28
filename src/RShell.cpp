@@ -28,21 +28,61 @@ cout << "$ ";
 while(getline(cin, word)) {
 
 for (int k = 0; k < word.length() - 1; ++k) {
-        if (word.at(k) == ';' && word.at(k+1) == ' ') {
+	if (word.at(k) == '\"') {
+		for (int i = k; i < word.length(); ++i) {
+			if (word.at(i) != '\"') {
+				++k;
+			}
+		}
+	}
+        else if (word.at(k) == ';' && word.at(k+1) == ' ') {
                 word.insert(k, 1, ' ');
                 ++k;
         }
 }
-
+////////////////////////////
+for (int k = 0; k < word.length(); ++k) {
+	if (word.at(k) == '(') {
+		word.insert(k+1, 1, ' ');
+		++k;
+	}
+	if (word.at(k) == ')') {
+		word.insert(k, 1, ' ');
+		++k;
+	}
+}
+////////////////////////////
 for (int k = 0; k < word.length() - 1; ++k) {
-        if (word.at(k) == '#' && word.at(k-1) == ' ') {
+	if (word.at(0) == '#') {
+		word = ' ';
+		break;
+	}
+        else if (word.at(k) == '#' && word.at(k-1) == ' ') {
                 word.erase(word.begin()+k, word.end()+0);
         }
 }
+int par1 = 0;
+int par2 = 0;
+for (int k = 0; k < word.length(); ++k) { 
+	if (word.at(k) == '(') {
+		++par1;
+	}
+	if (word.at(k) == ')') {
+		++par2;
+	}
+}
 
+for (int k = 0; k < word.length(); ++k) {
+	if (word.at(k) == '(' || word.at(k) == ')') {
+		word.erase(k, 1);
+		
+	}
+}
 
 char myword[word.length() + 1];
 strcpy(myword, word.c_str());
+
+if (word != " " && par1 == par2) {
 
 char* charptr;
 charptr = strtok(myword, " ");
@@ -50,20 +90,25 @@ charptr = strtok(myword, " ");
 string connector1 = "&&";
 string connector2 = "||";
 string connector3 = ";";
-
+///////////////////////////////
+string connector4 = "(";
+string connector5 = ")";
+///////////////////////////////
 while (charptr != NULL) {
-        if(charptr == connector1 || charptr == connector2 || charptr == connector3) {
+        if(charptr == connector1 || charptr == connector2 || charptr == connector3/* || charptr == connector4 || charptr == connector5*/) { //// 4 and 5
                 Command* command1 = new Command(argVector);
                 commandVector.push_back(command1);
                 connectorVector.push_back(charptr);
                 argVector.clear();
         }
+	//else if (charptr == connector4 || charptr = connector5) {
+		
         else {
         argVector.push_back(charptr);
         }
         int count = 0;
         char* charptr2 = charptr;
-        while(*charptr2 != NULL) {
+        while(*charptr2) {
                 charptr2 = (charptr2 + 1);
                 count++;
         }
@@ -74,14 +119,13 @@ while (charptr != NULL) {
                 charptr = strtok(NULL, " ");
         }
 }
-
 Command* command1 = new Command(argVector);
 commandVector.push_back(command1);
 
 if(connectorVector.size() > 0) {
         vector<Connector*> connectorClassVector;
         int index = 0;
-        int commandIndex = 2;
+        int commandIndex = 2;/*
         for(int i = 0; i < connectorVector.size(); i++) {
                 if(i == 0) {
                         if(connectorVector[i] == connector1) {
@@ -101,7 +145,7 @@ if(connectorVector.size() > 0) {
                         }
                 }
                 else {
-                        if(connectorVector[i] == connector1) {
+                         if(connectorVector[i] == connector1) {
                                 And* temp = new And(connectorClassVector[index], commandVector[commandIndex]);
                                 if(i == connectorVector.size() - 1) {
                                         temp->execute();
@@ -134,19 +178,31 @@ if(connectorVector.size() > 0) {
                         }
                 }
         }
-        connectorClassVector.clear();
+        connectorClassVector.clear();*/
+command1->run(connectorClassVector, index, commandIndex, connectorVector, commandVector);
+connectorClassVector.clear();
 }
 
 else{
         commandVector.at(0)->execute();
 }
+charptr = NULL;
+} //
+
+if (par1 != par2) {
+	cout << "error: Incorrect amount of parentheses" << endl;
+}
 commandVector.clear();
 connectorVector.clear();
 argVector.clear();
 word.clear();
+myword[0];
 cout << "$ ";
 
 }
 
 }
+
+
+
 

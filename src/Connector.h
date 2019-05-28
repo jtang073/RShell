@@ -1,6 +1,6 @@
-#include "Instruction.hpp"
 #ifndef __CONNECTOR_H__
 #define __CONNECTOR_H__
+#include "Instruction.hpp"
 
 using namespace std;
 
