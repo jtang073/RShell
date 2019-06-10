@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 #include "Connector.h"
 #include "And.h"
 #include "Or.h"
@@ -104,23 +105,127 @@ bool Command::execute() {
                 	args[i] = arguments.at(i);
         	}
         	args[arguments.size()] = NULL;
-		if(execvp(args[0], args) < 0) {
-			perror("error running");
-			return false;
+		if (this->input != "") {
+			if (this->output != "") {
+				cout << "TESTING MOTHERKING IN OUT BISHES" << endl;
+				if (o == ">") {
+					int inputfd = open(input.c_str(), O_RDONLY);
+					int outputfd = open(output.c_str(), O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
+					if (inputfd < 0 || outputfd < 0) {
+						perror("Error: File could no be opened.");
+						return false;
+					}
+					dup2(inputfd, 0);
+					dup2(outputfd, 1);
+					close(inputfd);
+					close(outputfd);
+					if (execvp(args[0], args) < 0) {
+                                        perror("error running");
+                                        return false;
+                            	    	}
+				}
+				else if (o == ">>") {
+					int inputfd = open(input.c_str(), O_RDONLY);
+                                        int outputfd = open(output.c_str(), O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
+                                        if (inputfd < 0 || outputfd < 0) {
+                                                perror("Error: File could no be opened.");
+                                                return false;
+                                        }
+                                        dup2(inputfd, 0);
+                                        dup2(outputfd, 1);
+                                        close(inputfd);
+                                        close(outputfd);
+                                        if (execvp(args[0], args) < 0) {
+                                        perror("error running");
+                                        return false;
+                                        }
+				}
+			}
+			else {									//regular input
+				cout << "TESTING THE MOTHERFKING IREDIRECTORS" << endl;
+				int fd = open(input.c_str(), O_RDONLY);
+				if (fd < 0) {
+					perror("Error: File could not be opened.");
+					return false;
+				}
+				dup2(fd, 0);
+				close(fd);
+				if (execvp(args[0], args) < 0) {
+					perror("error running");
+					return false;
+				}
+			}
+		}
+		else if (this->output != "") {							//outputs
+			cout << "TESTING THE MOTHERFKING OREDIRECTORS" << endl;
+			if (o == ">") {
+                       		int fd = open(output.c_str(), O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
+                 		if (fd < 0) {
+                                	perror("Error: File could not be opened.");
+                        		return false;
+                	        }
+        	                dup2(fd, 1);
+	                        close(fd);
+                        	if (execvp(args[0], args) < 0) {
+                	                perror("error running");
+        	                        return false;
+	                        }
+				return true;
+                	}
+			if (o == ">>") {
+				int fd = open(output.c_str(), O_WRONLY | O_TRUNC | O_CREAT, S_IRWXU);
+                                if (fd < 0) {
+                                        perror("Error: File could not be opened.");
+                                        return false;
+                                }
+                                dup2(fd, 1);
+                                close(fd);
+                                if (execvp(args[0], args) < 0) {
+                                        perror("error running");
+                                        return false;
+                                }
+                                return true;
+			}
+		}
+		else {
+cout << "testing trash" << endl;
+			if (execvp(args[0], args) < 0) {
+				perror("error running");
+				return false;
+			}
 		}
 	}
         else {
-        	pid_t waiter = waitpid(pid, &testing, 0);
-		if(waiter == -1) {
-			perror("error: waiting failed");
-			return false;
-		}
-		if (WEXITSTATUS(testing) == 0) {
-			return true;
-		}
+		/*if (input != NULL) {						//1
+			int savestdin = dup(0);
+			int savestdout = dup(1);
+			int fd = open(input.c_str(), O_RDONLY | O_APPEND | O_CREAT);
+			if (fd < 0) {
+				perror("Error: File could not be opened.");
+				return false;
+			}
+			dup2(fd, 0);
+			close(fd);
+			dup2(savestdin, 0);
+			dup2(savestdout, 1);
+			if (execvp(args[0], args) < 0) {
+				perror("error running");
+				return false;
+			}
+		}*/								//1
+
+		//else {							2
+        		pid_t waiter = waitpid(pid, &testing, 0);
+			if(waiter == -1) {
+				perror("error: waiting failed");
+				return false;
+			}
+			if (WEXITSTATUS(testing) == 0) {
+				return true;
+			}
+		//}								2
         }
         return false;	
-	
 }
 
 
@@ -134,8 +239,8 @@ bool Command::run(vector<Connector*> connectorClassVecto, int inde, int comInde,
 	string connector1 = "&&";
 	string connector2 = "||";
 	string connector3 = ";";
-	string connector4 = "(";
-	string connector5 = ")";
+	string connector4 = "<";
+	string connector5 = ">";
         for(int i = index; i < connectorVector.size(); i++) {
                 if(i == index) {
                         if(connectorVector[index] == connector1) {

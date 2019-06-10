@@ -26,6 +26,7 @@ string word;
 cout << "$ ";
 
 while(getline(cin, word)) {
+int index = 0;
 
 for (int k = 0; k < word.length() - 1; ++k) {
 	if (word.at(k) == '\"') {
@@ -71,11 +72,82 @@ for (int k = 0; k < word.length(); ++k) {
 		++par2;
 	}
 }
-
 for (int k = 0; k < word.length(); ++k) {
 	if (word.at(k) == '(' || word.at(k) == ')') {
 		word.erase(k, 1);
 		
+	}
+}
+///////////////////////////
+string Ifile = "";
+string Ofile = "";
+bool Ifole = false;
+bool Ofole = false;
+string itemp;
+string otemp;
+for (int k = 0; k < word.length(); ++k) {
+	if (word.at(k) == '<') {
+		Ifole = true;
+		itemp = "<";
+		k = k + 2;
+		cout << "small true" << endl;
+		while (k + 1 <= word.length()) {
+			if (word.at(k) != ' ') {
+				Ifile = Ifile + word.at(k);
+				word.erase(k, 1);
+			}
+			else {
+				k = 69;
+			}
+		}
+	}
+}
+for (int k = 0; k < word.length(); ++k) {
+	if (word.at(k) == '>') {
+		Ofole = true;
+		if (word.at(k + 1) == '>') {
+		cout << "bigger true" << endl;
+			otemp = ">>";
+			k = k + 3;
+			while (k + 1 <= word.length()) {
+				if (word.at(k) != ' ') {
+					Ofile = Ofile + word.at(k);
+					word.erase(k, 1);
+				}
+				else {
+					k = 69;
+				}
+			}
+		}
+		else {
+			otemp = ">";
+			k = k + 2;
+			cout << "big true" << endl;
+			while (k + 1 <= word.length()) {
+				if (word.at(k) != ' ') {
+					Ofile = Ofile + word.at(k);
+					word.erase(k, 1);
+				}
+				else {
+					k = 69;
+				}
+			}
+		}
+cout << "finishing redirector loop" << endl;
+	}
+}
+for (int k = 0; k < word.length(); ++k) {
+	if (word.at(k) == '>') {
+		word.erase(k, 1);
+		if (word.at(k) == '>') {
+			word.erase(k, 1);
+		}
+	}
+}
+
+for (int k = 0; k < word.length(); ++k) {
+	if (word.at(k) == '<') {
+		word.erase(k,1);
 	}
 }
 
@@ -91,8 +163,8 @@ string connector1 = "&&";
 string connector2 = "||";
 string connector3 = ";";
 ///////////////////////////////
-string connector4 = "(";
-string connector5 = ")";
+string connector4 = "<";
+string connector5 = ">";
 ///////////////////////////////
 while (charptr != NULL) {
         if(charptr == connector1 || charptr == connector2 || charptr == connector3/* || charptr == connector4 || charptr == connector5*/) { //// 4 and 5
@@ -101,8 +173,6 @@ while (charptr != NULL) {
                 connectorVector.push_back(charptr);
                 argVector.clear();
         }
-	//else if (charptr == connector4 || charptr = connector5) {
-		
         else {
         argVector.push_back(charptr);
         }
@@ -121,72 +191,34 @@ while (charptr != NULL) {
 }
 Command* command1 = new Command(argVector);
 commandVector.push_back(command1);
+//
+if (Ifole == true) {
+	command1->setInputFile(Ifile);
+	command1->i = itemp;
+	cout << "Command ifile: " << command1->input << endl;
+}
 
+if (Ofole == true) {
+        command1->setOutputFile(Ofile);
+	command1->o = otemp;
+        cout << "Command ofile: " << command1->getOutputFile() << endl;
+}
+
+//
 if(connectorVector.size() > 0) {
         vector<Connector*> connectorClassVector;
-        int index = 0;
-        int commandIndex = 2;/*
-        for(int i = 0; i < connectorVector.size(); i++) {
-                if(i == 0) {
-                        if(connectorVector[i] == connector1) {
-                                And* temp = new And(commandVector[0], commandVector[1]);
-                                connectorClassVector.push_back(temp);
-                        }
-                        else if(connectorVector[i] == connector2) {
-                                Or* temp = new Or(commandVector[0], commandVector[1]);
-                                connectorClassVector.push_back(temp);
-                        }
-                        else if(connectorVector[i] == connector3) {
-                                Semicolon* temp = new Semicolon(commandVector.at(0), commandVector.at(1));
-                                connectorClassVector.push_back(temp);
-                        }
-                        if(i == connectorVector.size() - 1) {
-                                connectorClassVector.at(i)->execute();
-                        }
-                }
-                else {
-                         if(connectorVector[i] == connector1) {
-                                And* temp = new And(connectorClassVector[index], commandVector[commandIndex]);
-                                if(i == connectorVector.size() - 1) {
-                                        temp->execute();
-                                        break;
-                                }
-                                connectorClassVector.push_back(temp);
-                                commandIndex++;
-                                index++;
-                        }
-                        else if(connectorVector[i] == connector2) {
-                                Or* temp = new Or(connectorClassVector[index], commandVector[commandIndex]);
-                                if(i == connectorVector.size() - 1) {
-                                        temp->execute();
-                                        break;
-                                }
-                                connectorClassVector.push_back(temp);
-                                commandIndex++;
-                                index++;
-                        }
+        //int index = 0;
+        int commandIndex = index + 2;
 
-                        else if(connectorVector[i] == connector3) {
-                                Semicolon* temp = new Semicolon(connectorClassVector[index], commandVector[commandIndex]);
-                                if(i == connectorVector.size() - 1) {
-                                        temp->execute();
-                                        break;
-                                }
-                                connectorClassVector.push_back(temp);
-                                commandIndex++;
-                                index++;
-                        }
-                }
-        }
-        connectorClassVector.clear();*/
-command1->run(connectorClassVector, index, commandIndex, connectorVector, commandVector);
-connectorClassVector.clear();
+	command1->run(connectorClassVector, index, commandIndex, connectorVector, commandVector);
+	connectorClassVector.clear();
 }
 
 else{
         commandVector.at(0)->execute();
 }
 charptr = NULL;
+
 } //
 
 if (par1 != par2) {
