@@ -4,7 +4,7 @@ Spring 2019
 Jason Tang (862046859), Nathan Tran (862116704)  
 
 # Introduction
-RShell is a basic command shell in C++ that should prompt and accept input though command lines. Command lines will be executed via fork, execvp, and waitpid. The composite pattern will be used to represent commands, meaning logical operators, commands, and operands will all have their own designated base classes that they will inherit from. Command lines will be parsed and executed based on the classes each of the components represent. RShell also compensates for comment strings, exit commands, and incorrect/fatal command lines. RShell now utilizes the test operation to further increase it's arsenal of commands. Precedence through parenthesis is also accounted for in the newly updated RShell.
+RShell is a basic command shell in C++ that should prompt and accept input though command lines. Command lines will be executed via fork, execvp, and waitpid. The composite pattern will be used to represent commands, meaning logical operators, commands, and operands will all have their own designated base classes that they will inherit from. Command lines will be parsed and executed based on the classes each of the components represent. RShell also compensates for comment strings, exit commands, and incorrect/fatal command lines. RShell now utilizes the test operation to further increase it's arsenal of commands. Precedence through parenthesis is also accounted for in the newly updated RShell. Input/Output redirection and piping has been updated into the shell.
 
 # Diagram
 ![Diagram](/images/UMLL.png)
@@ -17,7 +17,7 @@ The base class of both Command and Connector. It highlights one pure virtual fun
 * **Class Group: Connector**  
 This class accepts two instructions as its parameters. It is only concerned about executing its left-hand side instruction and determining whether it should then execute its right-hand instruction. It returns a boolean based on the results of the left-hand instruction and the right-hand instruction. Subclasses strictly include ";", "&&", and "||".
 * **Class Group: Command**  
-Determines how data will be processed. Accepts a vector of character pointers and converts the vector into a null-terminated array. Then, execvp is executed with the array as the parameter. The exit command is assessed here and a child is forked in order to execute execvp. Returns a boolean based on the success of executing the arguments given. 
+Determines how data will be processed. Accepts a vector of character pointers and converts the vector into a null-terminated array. Then, execvp is executed with the array as the parameter. The exit command is assessed here and a child is forked in order to execute execvp. Returns a boolean based on the success of executing the arguments given. Redirection is handled within the commands because the redirections are essentially still commands with their input/outputs being changed.  
 
 # Research
 
@@ -154,8 +154,15 @@ The linux shell is able to accept any number and combination of commands and con
 6)	Test the classes together (compound connectors with commands mostly)
 7)	Create and test the Comment class
 8)	Test all classes together (same as 6 but with comments)
+9)	Create testing checks
+10)	Create precedence operators
+11)	Ensure that precedence still works with the connectors
+12)	Create I/O redirection
+13)	Ensure redirection still works with connectors
+14)	Create piping algorithms
+15)	Test entire RShell class
 
 # Reflection
-The creation of RShell was more difficult than anticipated. Since we did not want to depend on outside sources for the coding of a shell, some functions were either overcomplicated or oversimplified. The oversimplified functions typically did not work as expected, while the complicated code was difficult to test. Despite attempting to develop using agile principles, it helped little accentuate or coding skill. Therefore, it was our lack of effectiveness in coding which dragged our progress and delayed the final submission of the product. We spent approximately 40 hours on the creation of this assignment. We had to redo our parser for the main RShell since the old one did not support the precedence functionality. Although we ran into some hiccups, the newly improved RShell also addresses the other issues we had last.
+The creation of RShell was more difficult than anticipated. Since we did not want to depend on outside sources for the coding of a shell, some functions were either overcomplicated or oversimplified. The oversimplified functions typically did not work as expected, while the complicated code was difficult to test. Despite attempting to develop using agile principles, it helped little accentuate the proccess. Therefore, it was our lack of effectiveness in coding which dragged our progress and delayed the final submission of the product. We had to redo our parser for the main RShell since the old one did not support the precedence functionality. Although we ran into some hiccups, the newly improved RShell also addresses the other issues we had last. Redirection proved to be difficult to implement due to the current state of parsing algorithm. Despite being remade, the parser still experienced some unknown bugs. 
 
 
