@@ -13,7 +13,7 @@
 #include "Or.h"
 #include "Semicolon.h"
 #include "Command.h"
-
+//#include "Pipe.h"
 using namespace std;
 
 void RShell::run() {
@@ -78,6 +78,12 @@ for (int k = 0; k < word.length(); ++k) {
 		
 	}
 }
+
+for (int k = 0; k < word.length(); ++k) {
+	if (word.at(k) == '|') {
+		word.erase(k, 1);
+	}
+}
 ///////////////////////////
 string Ifile = "";
 string Ofile = "";
@@ -90,7 +96,6 @@ for (int k = 0; k < word.length(); ++k) {
 		Ifole = true;
 		itemp = "<";
 		k = k + 2;
-		cout << "small true" << endl;
 		while (k + 1 <= word.length()) {
 			if (word.at(k) != ' ') {
 				Ifile = Ifile + word.at(k);
@@ -106,7 +111,6 @@ for (int k = 0; k < word.length(); ++k) {
 	if (word.at(k) == '>') {
 		Ofole = true;
 		if (word.at(k + 1) == '>') {
-		cout << "bigger true" << endl;
 			otemp = ">>";
 			k = k + 3;
 			while (k + 1 <= word.length()) {
@@ -122,7 +126,6 @@ for (int k = 0; k < word.length(); ++k) {
 		else {
 			otemp = ">";
 			k = k + 2;
-			cout << "big true" << endl;
 			while (k + 1 <= word.length()) {
 				if (word.at(k) != ' ') {
 					Ofile = Ofile + word.at(k);
@@ -133,7 +136,6 @@ for (int k = 0; k < word.length(); ++k) {
 				}
 			}
 		}
-cout << "finishing redirector loop" << endl;
 	}
 }
 for (int k = 0; k < word.length(); ++k) {
@@ -195,13 +197,13 @@ commandVector.push_back(command1);
 if (Ifole == true) {
 	command1->setInputFile(Ifile);
 	command1->i = itemp;
-	cout << "Command ifile: " << command1->input << endl;
+//	cout << "Command ifile: " << command1->input << endl;
 }
 
 if (Ofole == true) {
         command1->setOutputFile(Ofile);
 	command1->o = otemp;
-        cout << "Command ofile: " << command1->getOutputFile() << endl;
+//        cout << "Command ofile: " << command1->getOutputFile() << endl;
 }
 
 //

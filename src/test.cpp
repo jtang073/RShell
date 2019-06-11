@@ -375,6 +375,77 @@ TEST(Test_Test, fFlag_CriesInBinary_FALSE) {
         EXPECT_EQ(command1->execute(), false);
 }
 
+TEST(RedirectorTest, InputRedirection) {
+	vector<char*> testvec;
+	string arg1 = "cat";
+	char* argcstring1 = (char*)(arg1.c_str());
+        testvec.push_back(argcstring1);
+
+	vector<char*> testvec3;
+	string arg3 = "<";
+	char* argcstring3 = (char*)(arg3.c_str());
+
+        vector<char*> testvec2;
+        string arg2 = "names.txt";
+        char* argcstring2 = (char*)(arg2.c_str());
+        testvec.push_back(argcstring2);
+	
+	Command* command1 = new Command(testvec);
+	EXPECT_EQ(command1->execute(), true);
+}
+
+TEST(RedirectorTest, OutputRedirection) {
+	vector<char*> testvec;
+        string arg1 = "echo";
+        char* argcstring1 = (char*)(arg1.c_str());
+        testvec.push_back(argcstring1);
+	
+	vector<char*> testvec1;
+	string arg = "hi";
+	char* argcstring = (char*)(arg.c_str());
+	testvec.push_back(argcstring);
+
+        vector<char*> testvec3;
+        string arg3 = ">";
+        char* argcstring3 = (char*)(arg3.c_str());
+
+        vector<char*> testvec2;
+        string arg2 = "test.txt";
+        char* argcstring2 = (char*)(arg2.c_str());
+        testvec.push_back(argcstring2);
+
+        Command* command1 = new Command(testvec);
+        EXPECT_EQ(command1->execute(), true);
+}
+
+TEST(RedirectorTest, InAndOutRedirection) {
+	vector<char*> testvec;
+        string arg1 = "cat";
+        char* argcstring1 = (char*)(arg1.c_str());
+        testvec.push_back(argcstring1);
+
+        vector<char*> testvec3;
+        string arg3 = "<";
+        char* argcstring3 = (char*)(arg3.c_str());
+
+        vector<char*> testvec2;
+        string arg2 = "names.txt";
+        char* argcstring2 = (char*)(arg2.c_str());
+        testvec.push_back(argcstring2);
+	
+	vector<char*> testvec0;
+        string arg0 = ">";
+        char* argcstring0 = (char*)(arg0.c_str());
+
+        vector<char*> testvec9;
+        string arg9 = "test.txt";
+        char* argcstring9 = (char*)(arg9.c_str());
+        
+
+        Command* command1 = new Command(testvec);
+        EXPECT_EQ(command1->execute(), true);
+
+}
 
 int main(int argc, char **argv) {
         ::testing::InitGoogleTest(&argc, argv);

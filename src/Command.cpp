@@ -14,7 +14,7 @@
 #include "And.h"
 #include "Or.h"
 #include "Semicolon.h"
-
+//#include "Pipe.h"
 
 using namespace std;
 
@@ -107,7 +107,6 @@ bool Command::execute() {
         	args[arguments.size()] = NULL;
 		if (this->input != "") {
 			if (this->output != "") {
-				cout << "TESTING MOTHERKING IN OUT BISHES" << endl;
 				if (o == ">") {
 					int inputfd = open(input.c_str(), O_RDONLY);
 					int outputfd = open(output.c_str(), O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
@@ -142,7 +141,6 @@ bool Command::execute() {
 				}
 			}
 			else {									//regular input
-				cout << "TESTING THE MOTHERFKING IREDIRECTORS" << endl;
 				int fd = open(input.c_str(), O_RDONLY);
 				if (fd < 0) {
 					perror("Error: File could not be opened.");
@@ -157,7 +155,6 @@ bool Command::execute() {
 			}
 		}
 		else if (this->output != "") {							//outputs
-			cout << "TESTING THE MOTHERFKING OREDIRECTORS" << endl;
 			if (o == ">") {
                        		int fd = open(output.c_str(), O_WRONLY | O_APPEND | O_CREAT, S_IRWXU);
                  		if (fd < 0) {
@@ -188,7 +185,6 @@ bool Command::execute() {
 			}
 		}
 		else {
-cout << "testing trash" << endl;
 			if (execvp(args[0], args) < 0) {
 				perror("error running");
 				return false;
@@ -255,6 +251,10 @@ bool Command::run(vector<Connector*> connectorClassVecto, int inde, int comInde,
                                 Semicolon* temp = new Semicolon(commandVector.at(index), commandVector.at(index+1));
                                 connectorClassVector.push_back(temp);
                         }
+	//		else if (connectorVector[index] == connector4) {
+	//			Pipe* temp = new Pipe(commandVector.at(index), commandVector.at(index+1));
+	//			connectorClassVector.push_back(temp);
+	//		}
                         if(i == connectorVector.size() - 1) {
                                 connectorClassVector.at(index)->execute();
                         }
@@ -298,6 +298,16 @@ bool Command::run(vector<Connector*> connectorClassVecto, int inde, int comInde,
                                 commandIndex++;
                                 index++;
                         }
+	//		else if (connectorVector[i] == connector4) {
+	//			Pipe* temp = new Pipe(connectorClassVector[index], commandVector[commandIndex]);
+	//			if(i == connectorVector.size() - 1) {
+          //                              temp->execute();
+           //                             break;
+           //                     }
+           //                     connectorClassVector.push_back(temp);
+           //                     commandIndex++;
+           //                     index++;
+	//		}
                 }
         }
         connectorClassVector.clear();
