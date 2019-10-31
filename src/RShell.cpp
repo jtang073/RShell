@@ -80,7 +80,7 @@ for (int k = 0; k < word.length(); ++k) {
 }
 
 for (int k = 0; k < word.length(); ++k) {
-	if (word.at(k) == '|') {
+	if (word.at(k) == '|' && word.at(k+1) != '|') {
 		word.erase(k, 1);
 	}
 }
