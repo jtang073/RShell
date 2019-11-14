@@ -4,7 +4,10 @@ Spring 2019
 Jason Tang (862046859), Nathan Tran (862116704)  
 
 # Introduction
-RShell is a basic command shell in C++ that should prompt and accept input though command lines. Command lines will be executed via fork, execvp, and waitpid. The composite pattern will be used to represent commands, meaning logical operators, commands, and operands will all have their own designated base classes that they will inherit from. Command lines will be parsed and executed based on the classes each of the components represent. RShell also compensates for comment strings, exit commands, and incorrect/fatal command lines. RShell now utilizes the test operation to further increase it's arsenal of commands. Precedence through parenthesis is also accounted for in the newly updated RShell. Input/Output redirection and piping has been updated into the shell.
+RShell is a basic command shell in C++ that should prompt and accept input though command lines. Command lines will be executed via fork, execvp, and waitpid. The composite pattern will be used to represent commands, meaning logical operators, commands, and operands will all have their own designated base classes that they will inherit from. Command lines will be parsed and executed based on the classes each of the components represent. RShell also compensates for comment strings, exit commands, and incorrect/fatal command lines. RShell now utilizes the test operation to further increase it's arsenal of commands. Precedence through parenthesis is also accounted for in the newly updated RShell. Input/Output redirection has been updated into the shell.
+
+**First Time Users**
+Run `git submodule update --init --recursive` to pull the googletest files then build with `cmake3 CMakeLists.txt`. RShell can execute many operations including, but not limited to, simple commands like `echo` and `ls`, connectors like `&&` and `||`, and file redirections like `<` and `>`. Exit the program using `exit`.
 
 # Diagram
 ![Diagram](/images/UMLL.png)

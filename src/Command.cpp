@@ -14,7 +14,7 @@
 #include "And.h"
 #include "Or.h"
 #include "Semicolon.h"
-//#include "Pipe.h"
+#include "Pipe.h"
 
 using namespace std;
 
@@ -28,12 +28,9 @@ bool Command::execute() {
 	if(strcmp(arguments.at(0), "exit") == 0) {
 		exit(0);
 	}
-//////////////////////////////////////////////////
 	if (strcmp(arguments.at(0), "test") == 0 || strcmp(arguments.at(0), "[") == 0) {
-		//cout << "goteem" << endl;
 		if (strcmp(arguments.at(1), "-e") == 0) {
 			struct stat temp;
-			//cout << "testing -e" << endl;
 			if (stat(arguments.at(2), &temp) == 0) {
 				cout << "(True)" << endl;
 				return true;
@@ -45,12 +42,7 @@ bool Command::execute() {
 		}
 		else if (strcmp(arguments.at(1), "-f") == 0) {
 			struct stat temp;
-			//cout << "testing -f" << endl;
 			if (stat(arguments.at(2), &temp) != 0) {
-//				if (temp.st_mode &S_IFREG) {
-//					cout << "(True)" << endl;
-//					return true;
-//				}
 				cout << "(False)" << endl;
 				return false;
 			}
@@ -65,12 +57,7 @@ bool Command::execute() {
 		}
 		else if (strcmp(arguments.at(1), "-d") == 0) {
 			struct stat temp;
-			//cout << "testing -d" << endl;
 			if (stat(arguments.at(2), &temp) != 0) {
-//				if (temp.st_mode &S_IFDIR) {
-//					cout << "(True)" << endl;
-//					return true;
-//				}
 				cout << "(False)" << endl;
 				return false;
 			}
@@ -85,7 +72,6 @@ bool Command::execute() {
 		}
 		else {
 			struct stat temp;
-                        //cout << "testing -e" << endl;
                         if (stat(arguments.at(2), &temp) == 0) {
                                 cout << "(True)" << endl;
                                 return true;
@@ -96,7 +82,6 @@ bool Command::execute() {
                         }
 		}
 	}
-//////////////////////////////////////////////////
         int testing = 0;
 	pid_t pid = fork();
         if(pid == 0) {
@@ -192,34 +177,14 @@ bool Command::execute() {
 		}
 	}
         else {
-		/*if (input != NULL) {						//1
-			int savestdin = dup(0);
-			int savestdout = dup(1);
-			int fd = open(input.c_str(), O_RDONLY | O_APPEND | O_CREAT);
-			if (fd < 0) {
-				perror("Error: File could not be opened.");
-				return false;
-			}
-			dup2(fd, 0);
-			close(fd);
-			dup2(savestdin, 0);
-			dup2(savestdout, 1);
-			if (execvp(args[0], args) < 0) {
-				perror("error running");
-				return false;
-			}
-		}*/								//1
-
-		//else {							2
-        		pid_t waiter = waitpid(pid, &testing, 0);
-			if(waiter == -1) {
-				perror("error: waiting failed");
-				return false;
-			}
-			if (WEXITSTATUS(testing) == 0) {
-				return true;
-			}
-		//}								2
+        	pid_t waiter = waitpid(pid, &testing, 0);
+		if(waiter == -1) {
+			perror("error: waiting failed");
+			return false;
+		}
+		if (WEXITSTATUS(testing) == 0) {
+			return true;
+		}
         }
         return false;	
 }
@@ -251,23 +216,12 @@ bool Command::run(vector<Connector*> connectorClassVecto, int inde, int comInde,
                                 Semicolon* temp = new Semicolon(commandVector.at(index), commandVector.at(index+1));
                                 connectorClassVector.push_back(temp);
                         }
-	//		else if (connectorVector[index] == connector4) {
-	//			Pipe* temp = new Pipe(commandVector.at(index), commandVector.at(index+1));
-	//			connectorClassVector.push_back(temp);
-	//		}
                         if(i == connectorVector.size() - 1) {
                                 connectorClassVector.at(index)->execute();
                         }
                 }
                 else {
-/////////////////////////////////////
-//			if (connectorVector[i] == connector4) {
-//				++i;
-//				new func while i != ) create add(or, command1)
-//					while loop keep track of indexes if %1 then return add l/r
-//					if command == false return false
-/////////////////////////////////////
-                         if(connectorVector[i] == connector1) {
+                        if(connectorVector[i] == connector1) {
                                 And* temp = new And(connectorClassVector[index], commandVector[commandIndex]);
                                 if(i == connectorVector.size() - 1) {
                                         flag = temp->execute();
@@ -298,16 +252,6 @@ bool Command::run(vector<Connector*> connectorClassVecto, int inde, int comInde,
                                 commandIndex++;
                                 index++;
                         }
-	//		else if (connectorVector[i] == connector4) {
-	//			Pipe* temp = new Pipe(connectorClassVector[index], commandVector[commandIndex]);
-	//			if(i == connectorVector.size() - 1) {
-          //                              temp->execute();
-           //                             break;
-           //                     }
-           //                     connectorClassVector.push_back(temp);
-           //                     commandIndex++;
-           //                     index++;
-	//		}
                 }
         }
         connectorClassVector.clear();

@@ -13,7 +13,7 @@
 #include "Or.h"
 #include "Semicolon.h"
 #include "Command.h"
-//#include "Pipe.h"
+#include "Pipe.h"
 using namespace std;
 
 void RShell::run() {
@@ -28,6 +28,8 @@ cout << "$ ";
 while(getline(cin, word)) {
 int index = 0;
 
+/* Manual manipulation of string to remove excess words, account for comments, and set up the string to be parsed into commands. */
+/* Multiple for loops because some manipulations require different start/end points. Also .erase() and .insert() messes with indexing of string. */
 for (int k = 0; k < word.length() - 1; ++k) {
 	if (word.at(k) == '\"') {
 		for (int i = k; i < word.length(); ++i) {
@@ -41,7 +43,7 @@ for (int k = 0; k < word.length() - 1; ++k) {
                 ++k;
         }
 }
-////////////////////////////
+
 for (int k = 0; k < word.length(); ++k) {
 	if (word.at(k) == '(') {
 		word.insert(k+1, 1, ' ');
@@ -52,7 +54,6 @@ for (int k = 0; k < word.length(); ++k) {
 		++k;
 	}
 }
-////////////////////////////
 for (int k = 0; k < word.length() - 1; ++k) {
 	if (word.at(0) == '#') {
 		word = ' ';
@@ -80,11 +81,14 @@ for (int k = 0; k < word.length(); ++k) {
 }
 
 for (int k = 0; k < word.length(); ++k) {
-	if (word.at(k) == '|' && word.at(k+1) != '|') {
+	if (word.at(k) == '|' && word.at(k+1) == '|') {
+		k = k + 2;
+	}
+	if (word.at(k) == '|') {
 		word.erase(k, 1);
 	}
 }
-///////////////////////////
+
 string Ifile = "";
 string Ofile = "";
 bool Ifole = false;
@@ -153,6 +157,7 @@ for (int k = 0; k < word.length(); ++k) {
 	}
 }
 
+
 char myword[word.length() + 1];
 strcpy(myword, word.c_str());
 
@@ -164,12 +169,8 @@ charptr = strtok(myword, " ");
 string connector1 = "&&";
 string connector2 = "||";
 string connector3 = ";";
-///////////////////////////////
-string connector4 = "<";
-string connector5 = ">";
-///////////////////////////////
 while (charptr != NULL) {
-        if(charptr == connector1 || charptr == connector2 || charptr == connector3/* || charptr == connector4 || charptr == connector5*/) { //// 4 and 5
+        if(charptr == connector1 || charptr == connector2 || charptr == connector3) {
                 Command* command1 = new Command(argVector);
                 commandVector.push_back(command1);
                 connectorVector.push_back(charptr);
@@ -193,25 +194,21 @@ while (charptr != NULL) {
 }
 Command* command1 = new Command(argVector);
 commandVector.push_back(command1);
-//
+
 if (Ifole == true) {
 	command1->setInputFile(Ifile);
 	command1->i = itemp;
-//	cout << "Command ifile: " << command1->input << endl;
 }
 
 if (Ofole == true) {
         command1->setOutputFile(Ofile);
 	command1->o = otemp;
-//        cout << "Command ofile: " << command1->getOutputFile() << endl;
 }
 
-//
+
 if(connectorVector.size() > 0) {
         vector<Connector*> connectorClassVector;
-        //int index = 0;
         int commandIndex = index + 2;
-
 	command1->run(connectorClassVector, index, commandIndex, connectorVector, commandVector);
 	connectorClassVector.clear();
 }
@@ -221,7 +218,7 @@ else{
 }
 charptr = NULL;
 
-} //
+}
 
 if (par1 != par2) {
 	cout << "error: Incorrect amount of parentheses" << endl;
